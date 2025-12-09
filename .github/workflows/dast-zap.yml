@@ -16,7 +16,7 @@ jobs:
         with:
           node-version: '20'
 
-      # fastbank_insecure_classwork
+      # fastbank_insecure_classwork (assume :3000)
       - name: Install fastbank_insecure_classwork deps
         working-directory: fastbank_insecure_classwork/backend
         run: npm install
@@ -25,9 +25,16 @@ jobs:
         working-directory: fastbank_insecure_classwork/backend
         run: |
           node server.js &
-          sleep 10
+          sleep 20
 
-      # canonicalization-example
+      - name: Run ZAP on fastbank_insecure_classwork
+        uses: zaproxy/action-full-scan@v0.13.0
+        with:
+          target: "http://localhost:3000"
+          fail_action: false
+          allow_issue_writing: false
+
+      # canonicalization-example (assume :3001)
       - name: Install canonicalization-example deps
         working-directory: canonicalization-example
         run: npm install
@@ -36,9 +43,16 @@ jobs:
         working-directory: canonicalization-example
         run: |
           node server.js &
-          sleep 10
+          sleep 20
 
-      # fastbank-auth-lab
+      - name: Run ZAP on canonicalization-example
+        uses: zaproxy/action-full-scan@v0.13.0
+        with:
+          target: "http://localhost:3001"
+          fail_action: false
+          allow_issue_writing: false
+
+      # fastbank-auth-lab (assume :3002)
       - name: Install fastbank-auth-lab deps
         working-directory: fastbank-auth-lab/src
         run: npm install
@@ -47,9 +61,16 @@ jobs:
         working-directory: fastbank-auth-lab/src
         run: |
           node server.js &
-          sleep 10
+          sleep 20
 
-      # idor
+      - name: Run ZAP on fastbank-auth-lab
+        uses: zaproxy/action-full-scan@v0.13.0
+        with:
+          target: "http://localhost:3002"
+          fail_action: false
+          allow_issue_writing: false
+
+      # idor (assume :3003)
       - name: Install idor deps
         working-directory: idor
         run: npm install
@@ -58,12 +79,11 @@ jobs:
         working-directory: idor
         run: |
           node server.js &
-          sleep 10
+          sleep 20
 
-      # ZAP scan (pick the right port for the app you want to test)
-      - name: Run OWASP ZAP full scan
+      - name: Run ZAP on idor
         uses: zaproxy/action-full-scan@v0.13.0
         with:
-          target: "http://localhost:3000"
+          target: "http://localhost:3003"
           fail_action: false
           allow_issue_writing: false
