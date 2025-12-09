@@ -18,8 +18,7 @@ jobs:
 
       - name: Install lab dependencies
         working-directory: fastbank_insecure_classwork/backend
-        run: |
-          npm install
+        run: npm install
 
       - name: Start vulnerable app
         working-directory: fastbank_insecure_classwork/backend
