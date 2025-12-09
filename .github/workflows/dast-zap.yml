@@ -16,7 +16,7 @@ jobs:
         with:
           node-version: '20'
 
-      # fastbank_insecure_classwork (assume :3000)
+      # fastbank_insecure_classwork (port 3000)
       - name: Install fastbank_insecure_classwork deps
         working-directory: fastbank_insecure_classwork/backend
         run: npm install
@@ -30,11 +30,12 @@ jobs:
       - name: Run ZAP on fastbank_insecure_classwork
         uses: zaproxy/action-full-scan@v0.13.0
         with:
-          target: "http://host.docker.internal:3000"
+          target: "http://localhost:3000"
+          artifact_name: "zap-fastbank-insecure"
           fail_action: false
           allow_issue_writing: false
 
-      # canonicalization-example (assume :3001)
+      # canonicalization-example (port 3001)
       - name: Install canonicalization-example deps
         working-directory: canonicalization-example
         run: npm install
@@ -48,11 +49,12 @@ jobs:
       - name: Run ZAP on canonicalization-example
         uses: zaproxy/action-full-scan@v0.13.0
         with:
-          target: "http://host.docker.internal:3001"
+          target: "http://localhost:3001"
+          artifact_name: "zap-canonicalization"
           fail_action: false
           allow_issue_writing: false
 
-      # fastbank-auth-lab (assume :3002)
+      # fastbank-auth-lab (port 3002)
       - name: Install fastbank-auth-lab deps
         working-directory: fastbank-auth-lab/src
         run: npm install
@@ -66,11 +68,12 @@ jobs:
       - name: Run ZAP on fastbank-auth-lab
         uses: zaproxy/action-full-scan@v0.13.0
         with:
-          target: "http://host.docker.internal:3002"
+          target: "http://localhost:3002"
+          artifact_name: "zap-fastbank-auth"
           fail_action: false
           allow_issue_writing: false
 
-      # idor (assume :3003)
+      # idor (port 3003)
       - name: Install idor deps
         working-directory: idor
         run: npm install
@@ -84,6 +87,7 @@ jobs:
       - name: Run ZAP on idor
         uses: zaproxy/action-full-scan@v0.13.0
         with:
-          target: "http://host.docker.internal:3003"
+          target: "http://localhost:3003"
+          artifact_name: "zap-idor"
           fail_action: false
           allow_issue_writing: false
