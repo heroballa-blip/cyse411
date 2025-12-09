@@ -1,4 +1,4 @@
-name: DAST - OWASP ZAP Full Scan
+name: DAST canonicalization-example
 
 on:
   workflow_dispatch:   # run manually from Actions tab
@@ -17,12 +17,12 @@ jobs:
           node-version: '20'
 
       - name: Install lab dependencies
-        working-directory: fastbank_insecure_classwork/backend
+        working-directory: canonicalization-example
         run: |
           npm install
 
       - name: Start vulnerable app
-        working-directory: fastbank_insecure_classwork/backend
+        working-directory: canonicalization-example
         run: |
           node server.js &
           sleep 20
@@ -32,7 +32,7 @@ jobs:
         with:
           target: "http://localhost:3000"
           fail_action: false
-          allow_issue_writing: false
+          allow_issue_writing: True
 
       - name: Upload ZAP scan report
         uses: actions/upload-artifact@v4
