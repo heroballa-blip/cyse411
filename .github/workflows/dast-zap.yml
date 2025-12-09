@@ -16,46 +16,51 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install lab dependencies
+      # fastbank_insecure_classwork
+      - name: Install fastbank_insecure_classwork deps
         working-directory: fastbank_insecure_classwork/backend
         run: npm install
 
-      - name: Start vulnerable app
+      - name: Start fastbank_insecure_classwork app
         working-directory: fastbank_insecure_classwork/backend
         run: |
           node server.js &
-          sleep 20
+          sleep 10
 
-      - name: Install lab dependencies
+      # canonicalization-example
+      - name: Install canonicalization-example deps
         working-directory: canonicalization-example
         run: npm install
 
-      - name: Start vulnerable app
+      - name: Start canonicalization-example app
         working-directory: canonicalization-example
         run: |
           node server.js &
-          sleep 20
+          sleep 10
 
-      - name: Install lab dependencies
+      # fastbank-auth-lab
+      - name: Install fastbank-auth-lab deps
         working-directory: fastbank-auth-lab/src
         run: npm install
 
-      - name: Start vulnerable app
+      - name: Start fastbank-auth-lab app
         working-directory: fastbank-auth-lab/src
         run: |
           node server.js &
-          sleep 20
+          sleep 10
 
-      - name: Install lab dependencies
+      # idor
+      - name: Install idor deps
         working-directory: idor
         run: npm install
 
-      - name: Start vulnerable app
+      - name: Start idor app
         working-directory: idor
         run: |
           node server.js &
-          sleep 20
+          sleep 10
 
+      # ZAP scan (pick the right port for the app you want to test)
       - name: Run OWASP ZAP full scan
         uses: zaproxy/action-full-scan@v0.13.0
         with:
