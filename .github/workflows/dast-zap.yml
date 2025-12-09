@@ -4,9 +4,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  zap_scan:
+  zap_fastbank_insecure:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -16,7 +15,7 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install lab dependencies
+      - name: Install dependencies
         working-directory: fastbank_insecure_classwork/backend
         run: npm install
 
@@ -36,5 +35,107 @@ jobs:
       - name: Upload ZAP scan report
         uses: actions/upload-artifact@v4
         with:
-          name: zap_scan
+          name: zap_fastbank_insecure
+          path: report.html
+
+  zap_canonicalization:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        working-directory: canonicalization-example
+        run: npm install
+
+      - name: Start canonicalization app
+        working-directory: canonicalization-example
+        run: |
+          node server.js &
+          sleep 20
+
+      - name: Run OWASP ZAP full scan
+        uses: zaproxy/action-full-scan@v0.13.0
+        with:
+          target: "http://localhost:3001"
+          fail_action: false
+          allow_issue_writing: false
+
+      - name: Upload ZAP scan report
+        uses: actions/upload-artifact@v4
+        with:
+          name: zap_canonicalization
+          path: report.html
+
+  zap_fastbank_auth_lab:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        working-directory: fastbank-auth-lab
+        run: npm install
+
+      - name: Start fastbank-auth-lab app
+        working-directory: fastbank-auth-lab
+        run: |
+          node server.js &
+          sleep 20
+
+      - name: Run OWASP ZAP full scan
+        uses: zaproxy/action-full-scan@v0.13.0
+        with:
+          target: "http://localhost:3002"
+          fail_action: false
+          allow_issue_writing: false
+
+      - name: Upload ZAP scan report
+        uses: actions/upload-artifact@v4
+        with:
+          name: zap_fastbank_auth_lab
+          path: report.html
+
+  zap_idor:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        working-directory: idor
+        run: npm install
+
+      - name: Start idor app
+        working-directory: idor
+        run: |
+          node server.js &
+          sleep 20
+
+      - name: Run OWASP ZAP full scan
+        uses: zaproxy/action-full-scan@v0.13.0
+        with:
+          target: "http://localhost:3003"
+          fail_action: false
+          allow_issue_writing: false
+
+      - name: Upload ZAP scan report
+        uses: actions/upload-artifact@v4
+        with:
+          name: zap_idor
           path: report.html
