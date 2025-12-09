@@ -26,6 +26,39 @@ jobs:
           node server.js &
           sleep 20
 
+
+      - name: Install lab dependencies
+        working-directory: canonicalization-example
+        run: npm install
+
+      - name: Start vulnerable app
+        working-directory: canonicalization-example
+        run: |
+          node server.js &
+          sleep 20
+
+
+      - name: Install lab dependencies
+        working-directory: fastbank-auth-lab/src
+        run: npm install
+
+      - name: Start vulnerable app
+        working-directory: fastbank-auth-lab/src
+        run: |
+          node server.js &
+          sleep 20
+
+      - name: Install lab dependencies
+        working-directory: idor
+        run: npm install
+
+      - name: Start vulnerable app
+        working-directory: idor
+        run: |
+          node server.js &
+          sleep 20
+
+
       - name: Run OWASP ZAP full scan
         uses: zaproxy/action-full-scan@v0.13.0
         with:
