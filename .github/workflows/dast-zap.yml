@@ -1,7 +1,7 @@
 name: DAST - OWASP ZAP Full Scan
 
 on:
-  workflow_dispatch:   # run manually from Actions tab
+  workflow_dispatch:
 
 jobs:
   zap_scan:
