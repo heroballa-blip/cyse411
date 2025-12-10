@@ -1,4 +1,4 @@
-name: DAST - fastbank_insecure_classwork
+name: DAST-fastbank-insecure-classwork
 
 on:
   workflow_dispatch:
@@ -17,11 +17,11 @@ jobs:
           node-version: '20'
 
       - name: Install lab dependencies
-        working-directory: fastbank_insecure_classwork
+        working-directory: fastbank_insecure_classwork/backend
         run: npm install
 
       - name: Start vulnerable app
-        working-directory: fastbank_insecure_classwork
+        working-directory: fastbank_insecure_classwork/backend
         run: |
           npm start &
           sleep 20
