@@ -7,15 +7,6 @@ const crypto = require("crypto");
 
 const app = express();
 
-// Add global security headers (fixes ZAP Medium CSP alert)
-app.use((req, res, next) => {
-  res.setHeader("Content-Security-Policy", "default-src 'self'");
-  res.setHeader("X-Content-Type-Options", "nosniff");
-  res.setHeader("X-Frame-Options", "DENY");
-  res.setHeader("Permissions-Policy", "geolocation=()");
-  next();
-});
-
 // --- BASIC CORS (clean, not vulnerable) ---
 app.use(
   cors({
@@ -175,6 +166,6 @@ app.post("/change-email", auth, (req, res) => {
 });
 
 // ------------------------------------------------------------
-app.listen(3000, () =>
-  console.log("FastBank Version A backend running on http://localhost:3000")
+app.listen(4000, () =>
+  console.log("FastBank Version A backend running on http://localhost:4000")
 );
