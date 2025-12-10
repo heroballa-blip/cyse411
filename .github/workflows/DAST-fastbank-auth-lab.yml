@@ -1,6 +1,7 @@
 name: DAST fastbank-auth-lab
+
 on:
-  workflow_dispatch:   # run manually from Actions tab
+  workflow_dispatch:
 
 jobs:
   zap_scan:
@@ -17,8 +18,7 @@ jobs:
 
       - name: Install lab dependencies
         working-directory: fastbank-auth-lab/src
-        run: |
-          npm install
+        run: npm install
 
       - name: Start vulnerable app
         working-directory: fastbank-auth-lab/src
@@ -32,9 +32,11 @@ jobs:
           target: "http://host.docker.internal:3001"
           fail_action: true
           allow_issue_writing: false
+          output_dir: zap-report
+          artifact_name: zap_scan
 
       - name: Upload ZAP scan report
         uses: actions/upload-artifact@v4
         with:
           name: zap_scan
-          path: report.html
+          path: zap-report/
