@@ -16,12 +16,12 @@ jobs:
           node-version: '20'
 
       - name: Install lab dependencies
-        working-directory: canonicalization-example
+        working-directory: fastbank-auth-lab/src
         run: |
           npm install
 
       - name: Start vulnerable app
-        working-directory: canonicalization-example
+        working-directory: fastbank-auth-lab/src
         run: |
           node server.js &
           sleep 20
